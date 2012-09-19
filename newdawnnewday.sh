@@ -26,5 +26,5 @@ else
 	echo "Not on master - switching to it now"
 	git checkout master
 fi
-
+echo 'Updating master'
 git pull origin master
