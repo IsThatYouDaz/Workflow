@@ -28,3 +28,5 @@ else
 fi
 echo 'Updating master'
 git pull origin master
+
+git checkout -b $TODAY_BRANCH_NAME
