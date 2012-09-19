@@ -24,7 +24,7 @@ if [ "$CURRENT_BRANCH" == "master" ]; then
 	echo "We are on master"
 else
 	echo "Not on master - switching to it now"
-	`git checkout master`
+	git checkout master
 fi
 
-`git pull origin master`
+git pull origin master
