@@ -12,8 +12,6 @@ done
 TODAY_BRANCH_NAME=$INITALS"_"$TODAY
 YESTERDAY_BRANCH_NAME=$INITALS"_"$YESTERDAY
 
-
-
 #if current branch isn't master then check it out
 #pull origin master
 #check if it completed successfully? some how
@@ -29,4 +27,5 @@ fi
 echo 'Updating master'
 git pull origin master
 
+echo 'Creating and checking out todays working branch'
 git checkout -b $TODAY_BRANCH_NAME
