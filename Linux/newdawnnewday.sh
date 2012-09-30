@@ -28,3 +28,6 @@ git pull origin master
 
 echo 'Creating and checking out todays working branch'
 git checkout -b $TODAY_BRANCH_NAME
+
+echo 'Removing previous days branch'
+git branch -d $YESTERDAY_BRANCH_NAME
