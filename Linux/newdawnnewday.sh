@@ -1,5 +1,4 @@
 #!/bin/bash
-# decalre
 FULLNAME=`git config user.name`
 TODAY=`date +%A`
 YESTERDAY=`date --date=yesterday +%A`
