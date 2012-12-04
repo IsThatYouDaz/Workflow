@@ -41,8 +41,6 @@ else
 
 fi
 
-echo checkoutMaster
-
 echo 'Updating master'
 git pull origin master
 pullSuccess=$?
