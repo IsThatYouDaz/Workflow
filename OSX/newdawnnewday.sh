@@ -1,4 +1,16 @@
 #!/bin/bash
+
+#functions
+function throwException {
+		echo ' '
+		echo '!! ERROR - DAILY BRANCH NOT CREATED !!'
+		echo 'FIX THE ABOVE PROBLEMS AND RUN THIS PROCESS AGAIN'
+		echo 'PRESS ANY KEY TO EXIT'
+    	read anyKey
+    	exit
+}
+
+#main
 FULLNAME=`git config user.name`
 TODAY=`date +%A`
 YESTERDAY=`date -v -1d +%A`
@@ -22,12 +34,30 @@ if [ "$CURRENT_BRANCH" == "master" ]; then
 else
 	echo "Not on master - switching to it now"
 	git checkout master
+	checkoutMaster=$?
+	if [[ $checkoutMaster != 0 ]] ; then
+		throwException
+	fi
+
 fi
+
 echo 'Updating master'
 git pull origin master
+pullSuccess=$?
+if [[ $pullSuccess != 0 ]] ; then
+	throwException
+fi
 
 echo 'Creating and checking out todays working branch'
 git checkout -b $TODAY_BRANCH_NAME
+checkoutDailySuccess=$?
+if [[ $checkoutDailySuccess != 0 ]] ; then
+	throwException
+fi
 
-echo 'Removing previous days branch'
-git branch -d $YESTERDAY_BRANCH_NAME
+YESTERDAY_EXISTS=`git branch | grep -c $YESTERDAY_BRANCH_NAME`
+
+if [ "$YESTERDAY_EXISTS" == "1" ] ; then
+	echo 'Removing previous days branch'
+	git branch -d $YESTERDAY_BRANCH_NAME
+fi
