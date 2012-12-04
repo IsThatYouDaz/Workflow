@@ -55,5 +55,9 @@ if [[ $checkoutDailySuccess != 0 ]] ; then
 	throwException
 fi
 
-echo 'Removing previous days branch'
-git branch -d $YESTERDAY_BRANCH_NAME
+YESTERDAY_EXISTS=`git branch | grep -c $YESTERDAY_BRANCH_NAME`
+
+if [ "$YESTERDAY_EXISTS" == "1" ] ; then
+	echo 'Removing previous days branch'
+	git branch -d $YESTERDAY_BRANCH_NAME
+fi
