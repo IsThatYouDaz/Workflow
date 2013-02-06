@@ -15,10 +15,19 @@ FULLNAME=`git config user.name`
 TODAY=`date +%A`
 YESTERDAY=`date --date=yesterday +%A`
 CURRENT_BRANCH=`git branch | grep "*" | sed "s/* //"`
-CURRENT_STATUS=`git status | grep -c "nothing to commit"`
+IS_CLEAN=`git status | grep -c "nothing to commit"`
+IS_PUSHED=`git status | grep -c "Your branch is ahead of 'origin/master'"`
 
-echo $CURRENT_STATUS
-throwException
+if [ "$IS_CLEAN" == "0" ]; then
+	echo ' '
+	echo 'Changes outstanding to be commited, please commit and push these changes before running newdawnnewday again'
+	throwException
+fi
+
+if [ "$IS_PUSHED" == "1"]; then
+	echo ' '
+	echo 'You have not pushed your daily branch, please push your daily branch and inform your merge manager'
+fi
 
 for word in $FULLNAME; do
 	INITALS=$INITALS${word:0:1}
