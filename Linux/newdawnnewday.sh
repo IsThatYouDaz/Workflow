@@ -49,6 +49,18 @@ if [[ $pullSuccess != 0 ]] ; then
 fi
 
 echo 'Creating and checking out todays working branch'
+
+DAILY_EXISTS=`git branch | grep -c $TODAY_BRANCH_NAME`
+
+if ["$DAILY_EXISTS" == "1"] ; then
+	echo 'This daily branch already exists attempting cleanup'
+	git branch -d $TODAY_BRANCH_NAME
+	dailyRemoveSuccess=$?
+	if [[$dailyRemoveSuccess != 0]] ; then
+		throwException
+	fi
+fi
+
 git checkout -b $TODAY_BRANCH_NAME
 checkoutDailySuccess=$?
 if [[ $checkoutDailySuccess != 0 ]] ; then
@@ -60,4 +72,8 @@ YESTERDAY_EXISTS=`git branch | grep -c $YESTERDAY_BRANCH_NAME`
 if [ "$YESTERDAY_EXISTS" == "1" ] ; then
 	echo 'Removing previous days branch'
 	git branch -d $YESTERDAY_BRANCH_NAME
+	yesterdayRemoveSuccess=$?
+	if [[$yesterdayRemoveSuccess != 0]] ; then
+		throwException
+	fi
 fi
