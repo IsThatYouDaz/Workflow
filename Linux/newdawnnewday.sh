@@ -15,7 +15,7 @@ FULLNAME=`git config user.name`
 TODAY=`date +%A`
 YESTERDAY=`date --date=yesterday +%A`
 CURRENT_BRANCH=`git branch | grep "*" | sed "s/* //"`
-CURRENT_STATUS=`git status | grep -c "*nothing to commit*"`
+CURRENT_STATUS=`git status | grep -c "nothing to commit"`
 
 echo $CURRENT_STATUS
 throwException
