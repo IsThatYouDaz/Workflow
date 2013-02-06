@@ -15,6 +15,7 @@ FULLNAME=`git config user.name`
 TODAY=`date +%A`
 YESTERDAY=`date --date=yesterday +%A`
 CURRENT_BRANCH=`git branch | grep "*" | sed "s/* //"`
+CURRENT_STATUS=`git status`
 
 for word in $FULLNAME; do
 	INITALS=$INITALS${word:0:1}
@@ -52,7 +53,8 @@ echo 'Creating and checking out todays working branch'
 
 DAILY_EXISTS=`git branch | grep -c $TODAY_BRANCH_NAME`
 
-if ["$DAILY_EXISTS" == "1"] ; then
+
+if [ "$DAILY_EXISTS" == "1" ] ; then
 	echo 'This daily branch already exists attempting cleanup'
 	git branch -d $TODAY_BRANCH_NAME
 	dailyRemoveSuccess=$?
