@@ -13,7 +13,7 @@ function throwException {
 #main
 FULLNAME=`git config user.name`
 TODAY=`date +%A`
-YESTERDAY=`date --date=yesterday +%A`
+YESTERDAY=`date -v -1d +%A`
 CURRENT_BRANCH=`git branch | grep "*" | sed "s/* //"`
 IS_CLEAN=`git status | grep -c "nothing to commit"`
 
