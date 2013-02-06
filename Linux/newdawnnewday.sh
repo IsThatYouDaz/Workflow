@@ -24,7 +24,7 @@ if [ "$IS_CLEAN" == "0" ]; then
 	throwException
 fi
 
-if [ "$IS_PUSHED" == "1"]; then
+if [ "$IS_PUSHED" == "1" ]; then
 	echo ' '
 	echo 'You have not pushed your daily branch, please push your daily branch and inform your merge manager'
 fi
