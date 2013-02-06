@@ -27,6 +27,7 @@ fi
 if [ "$IS_PUSHED" == "1" ]; then
 	echo ' '
 	echo 'You have not pushed your daily branch, please push your daily branch and inform your merge manager'
+	throwException
 fi
 
 for word in $FULLNAME; do
