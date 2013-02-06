@@ -16,7 +16,16 @@ TODAY=`date +%A`
 YESTERDAY=`date --date=yesterday +%A`
 CURRENT_BRANCH=`git branch | grep "*" | sed "s/* //"`
 IS_CLEAN=`git status | grep -c "nothing to commit"`
-IS_PUSHED=`git status | grep -c "Your branch is ahead of 'origin/master'"`
+
+
+for word in $FULLNAME; do
+	INITALS=$INITALS${word:0:1}
+done
+
+TODAY_BRANCH_NAME=$INITALS"_"$TODAY
+YESTERDAY_BRANCH_NAME=$INITALS"_"$YESTERDAY
+
+IS_PUSHED=`git branch -a | grep -c $TODAY_BRANCH_NAME`
 
 if [ "$IS_CLEAN" == "0" ]; then
 	echo ' '
@@ -29,14 +38,6 @@ if [ "$IS_PUSHED" == "1" ]; then
 	echo 'You have not pushed your daily branch, please push your daily branch and inform your merge manager'
 	throwException
 fi
-
-for word in $FULLNAME; do
-	INITALS=$INITALS${word:0:1}
-done
-
-TODAY_BRANCH_NAME=$INITALS"_"$TODAY
-YESTERDAY_BRANCH_NAME=$INITALS"_"$YESTERDAY
-
 #if current branch isn't master then check it out
 #pull origin master
 #check if it completed successfully? some how
@@ -74,6 +75,11 @@ if [ "$DAILY_EXISTS" == "1" ] ; then
 	if [[ $dailyRemoveSuccess != 0 ]] ; then
 		throwException
 	fi
+	git push origin :$TODAY_BRANCH_NAME
+	dailyOriginRemovalSuccess=$?
+	if [[ $dailyOriginRemovalSuccess != 0 ]] ; then
+		throwException
+	fi
 fi
 
 git checkout -b $TODAY_BRANCH_NAME
@@ -91,4 +97,11 @@ if [ "$YESTERDAY_EXISTS" == "1" ] ; then
 	if [[ $yesterdayRemoveSuccess != 0 ]] ; then
 		throwException
 	fi
+	git push origin :$YESTERDAY_BRANCH_NAME
+	originRemovalSuccess=$?
+	if [[ $originRemovalSuccess != 0 ]] ; then
+		throwException
+	fi
 fi
+
+#modifed test
